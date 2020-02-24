@@ -6,14 +6,17 @@ namespace S2.Oop
     {
         static void Main()
         {
-            Employee e = new Employee();
-            e.Name = "Brian";
-            e.Id = 45;
-            e.Salary = 10000m;
+            int input = -87;
 
-            Console.WriteLine(e);
-
-            Console.ReadLine();
+            (bool isValid, string errorMessage) validationResult = Employee.ValidateId(input);
+            if(!validationResult.isValid)
+            {
+                Console.WriteLine(validationResult.errorMessage);
+            }
+            else
+            {
+                Employee employee = new Employee(input, "", 54m);
+            }
         }
     }
 }

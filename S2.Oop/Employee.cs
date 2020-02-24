@@ -11,6 +11,25 @@ namespace S2.Oop
         private string name;
         private decimal salary;
 
+        /// <summary>
+        /// Creates a new <see cref="Employee"/> with the provided <paramref name="id"/>, name and salary.
+        /// </summary>
+        /// <param name="id">The id in the DB</param>
+        /// <param name="name"></param>
+        /// <param name="salary"></param>
+        /// <exception cref="ArgumentException"/>
+        /// <exception cref="ArgumentOutOfRangeException"/>
+        public Employee(int id, string name, decimal salary)
+        {
+            Id = id;
+            Name = name;
+            Salary = salary;
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="id"/> of the employee.
+        /// </summary>
+        
         public int Id
         {
             get
@@ -19,9 +38,10 @@ namespace S2.Oop
             }
             set
             {
-                if(value < 0)
+                (bool isValid, string errorMessage) validationResult = ValidateId(value);
+                if(!validationResult.isValid)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(Id), "Id must not be negative");
+                    throw new ArgumentOutOfRangeException(nameof(Id), validationResult.errorMessage);
                 }
                 if(value != id)
                 {
@@ -30,6 +50,10 @@ namespace S2.Oop
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <exception cref="ArgumentException">dsfsdfs</exception>
         public string Name
         {
             get => name;
@@ -67,5 +91,17 @@ namespace S2.Oop
 
         public override string ToString()
             => $"Id: {id}\tNavn: {name}\tLøn: {salary.ToString("c")}";
+
+        public static (bool, string) ValidateId(int id)
+        {
+            if(id < 0.0m)
+            {
+                return (false, "Id must not be negative");
+            }
+            else
+            {
+                return (true, String.Empty);
+            }
+        }
     }
 }
